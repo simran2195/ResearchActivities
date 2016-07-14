@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="8dp"
+    app:cardUseCompatPadding="true"
+    android:scrollbars="none"
+    app:cardElevation="2dp"
+    >
+
+    <!--android:background="#C5CAE9"-->
+    <!--android:foreground="?attr/selectableItemBackground"-->
+    <!--android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:background="?android:selectableItemBackground"
+        >
+
+        <ImageView
+            android:id="@+id/list_avatar"
+            android:layout_width="match_parent"
+            android:foregroundGravity="center_horizontal"
+            android:layout_height="150dp"
+            android:contentDescription="abc"
+            android:src="@drawable/seminar"
+            android:scaleType="centerCrop"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:backgroundTint="#c9ffffff" />
+
+        <TextView
+            android:id="@+id/list_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="36sp"
+            android:text="Seminar"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:layout_centerInParent="true"
+            android:elegantTextHeight="true" />
+
+        <!--<ImageView-->
+            <!--android:id="@+id/list_avatar"-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:scaleType="centerCrop"-->
+            <!--android:src="@drawable/seminar" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/list_title"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="16dp"-->
+            <!--android:layout_toRightOf="@+id/list_avatar"-->
+            <!--android:text="Androidwarriors "-->
+            <!--android:textColor="#000000"-->
+            <!--android:textAppearance="?attr/textAppearanceListItem"-->
+            <!--android:textSize="16sp" />-->
+
+        <TextView
+            android:id="@+id/list_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/list_title"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@+id/list_avatar"
+            android:textColor="#000000"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text=" "
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

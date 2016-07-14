@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="8dp"
+    app:cardUseCompatPadding="true"
+    android:scrollbars="none"
+    app:cardElevation="3dp"
+
+    >
+
+    <!--android:background="#C5CAE9"-->
+    <!--android:foreground="?attr/selectableItemBackground"-->
+    <!--android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:paddingTop="3dp"
+        android:id="@+id/card"
+        android:paddingBottom="3dp"
+        android:layout_marginBottom="15dp"
+        android:orientation="horizontal"
+        android:background="?android:selectableItemBackground"
+
+        >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageLayout"
+            android:gravity="center_vertical"
+            >
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:contentDescription="abc"
+                android:src="@drawable/seminar"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerCrop"
+                android:backgroundTint="#c9ffffff"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="13dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/imageLayout"
+            android:id="@+id/relativeLayout"
+            >
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14dp"
+                android:text="Seminar's Title"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:elegantTextHeight="true"
+                android:layout_marginLeft="10dp"
+                android:layout_alignParentTop="true" />
+
+
+            <TextView
+                android:id="@+id/speaker"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:textSize="13dp"
+                android:text="Name"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:layout_below="@+id/title"
+                android:layout_alignLeft="@+id/title"
+                android:layout_alignStart="@+id/title" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13dp"
+                android:text="Date"
+                android:textColor="#000000"
+                android:layout_below="@+id/speaker"
+                android:layout_alignLeft="@+id/speaker"
+                android:layout_alignStart="@+id/speaker" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:id="@+id/plus"
+        android:layout_marginTop="30dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="17dp"
+        android:layout_alignBottom="@+id/card">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButton"
+            android:src="@drawable/coloured_plus"
+            android:background="#00ffffff"
+            android:onClick="clickAddSeminarToCalendar"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

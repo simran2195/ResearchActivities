@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "93471120982",
+    "project_id": "researchactivities-3f3c6"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93471120982:android:de61b41182bd6fff",
+        "android_client_info": {
+          "package_name": "com.example.simran.researchactivities"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "93471120982-85sa4ba2m84jnh734fo9g3au8tnnva9g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.simran.researchactivities",
+            "certificate_hash": "FC513F21A84C610D4C74789DC3764AD1A2807BAE"
+          }
+        },
+        {
+          "client_id": "93471120982-0tndee75q04e6tnn0s4kbotq1fdj4bf1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYoXKqSV2okQQFlWaI__YEGr0cN59aw9M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
