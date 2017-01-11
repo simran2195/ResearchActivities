@@ -57,6 +57,8 @@ public class ResearchFragment extends Fragment
         allItems.add(new ResearchItemObjects("Seminars", R.drawable.seminar));
 //        allItems.add(new ResearchItemObjects("Seminars", R.drawable.seminar2));
         allItems.add(new ResearchItemObjects("Research News", R.drawable.researchnews3));
+        allItems.add(new ResearchItemObjects("Events", R.drawable.events));
+
 //        allItems.add(new ResearchItemObjects("Research  Openings", R.drawable.researchopenings));
         allItems.add(new ResearchItemObjects("Research Openings", R.drawable.researchopenings));
 

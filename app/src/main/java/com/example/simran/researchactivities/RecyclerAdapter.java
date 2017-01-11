@@ -65,6 +65,16 @@ public class RecyclerAdapter extends  RecyclerView.Adapter<RecyclerViewHolder>
                 v.getContext().startActivity(new Intent(v.getContext(), ResearchNews.class));
 
             }
+            if(position == 2) {
+//                Toast.makeText(context, "This is position " + position, Toast.LENGTH_LONG).show();
+                v.getContext().startActivity(new Intent(v.getContext(), PosterEventsActivity.class));
+
+            }
+            if(position == 3) {
+//                Toast.makeText(context, "This is position " + position, Toast.LENGTH_LONG).show();
+                v.getContext().startActivity(new Intent(v.getContext(), ResearchOpeningsActivity.class));
+
+            }
 
         }
     };

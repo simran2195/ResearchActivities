@@ -1,12 +1,15 @@
 package com.example.simran.researchactivities;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -18,6 +21,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * Activity to demonstrate basic retrieval of the Google user's ID, email address, and basic
@@ -25,19 +30,23 @@ import com.google.android.gms.common.api.Status;
  */
 public class SignInActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener,
-        View.OnClickListener {
+        View.OnClickListener
+{
 
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
 
-    private GoogleApiClient mGoogleApiClient;
+    public static GoogleApiClient mGoogleApiClient;
     private TextView mStatusTextView;
     private ProgressDialog mProgressDialog;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in2);
+
 
         // Views
         mStatusTextView = (TextView) findViewById(R.id.status);
@@ -79,17 +88,32 @@ public class SignInActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onStart() {
+    public void onStart()
+    {
         super.onStart();
 
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
-        if (opr.isDone()) {
+        if (opr.isDone())
+        {
             // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
             // and the GoogleSignInResult will be available instantly.
             Log.d(TAG, "Got cached sign-in");
             GoogleSignInResult result = opr.get();
             handleSignInResult(result);
-        } else {
+        }
+        else
+        {
+
+            //********************************************************
+
+            // SAL SIGN IN CHECK
+
+            //GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+
+            //break;
+
+           //  ************************************************************/
+
             // If the user has not previously signed in on this device or the sign-in has expired,
             // this asynchronous branch will attempt to sign in the user silently.  Cross-device
             // single sign-on will occur in this branch.
@@ -110,9 +134,28 @@ public class SignInActivity extends AppCompatActivity implements
         super.onActivityResult(requestCode, resultCode, data);
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == RC_SIGN_IN)
+        {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            handleSignInResult(result);
+            GoogleSignInAccount acct = result.getSignInAccount();
+            String personEmail = acct.getEmail();
+            boolean flag = true;
+            if (personEmail.toLowerCase().contains("@iiitd.ac.in")||flag) {
+                Toast.makeText(getApplicationContext(), "Signed In from account: " + personEmail, Toast.LENGTH_LONG).show();
+                Log.d(TAG, "Signed In");
+                handleSignInResult(result);
+            }
+            else {
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(SignInActivity.this);
+                builder1.setMessage("Sign In with a IIITD account!");
+                builder1.setNeutralButton("Okay", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                builder1.show();
+                signOut();
+            }
         }
     }
     // [END onActivityResult]
@@ -137,17 +180,21 @@ public class SignInActivity extends AppCompatActivity implements
     // [END handleSignInResult]
 
     // [START signIn]
-    private void signIn() {
+    private void signIn()
+    {
+
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
 
-        //Intent intent = new Intent(this, MainActivity.class);
-        //startActivity(intent);
+        /*Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra();
+        startActivity(intent);*/
     }
     // [END signIn]
 
     // [START signOut]
-    private void signOut() {
+    public void signOut()
+    {
         Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
                 new ResultCallback<Status>() {
                     @Override
@@ -161,7 +208,7 @@ public class SignInActivity extends AppCompatActivity implements
     // [END signOut]
 
     // [START revokeAccess]
-    private void revokeAccess() {
+    public void revokeAccess() {
         Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
                 new ResultCallback<Status>() {
                     @Override
@@ -197,7 +244,7 @@ public class SignInActivity extends AppCompatActivity implements
         }
     }
 
-    private void updateUI(boolean signedIn) {
+    public void updateUI(boolean signedIn) {
         if (signedIn) {
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);
             findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
@@ -211,6 +258,7 @@ public class SignInActivity extends AppCompatActivity implements
 
     @Override
     public void onClick(View v) {
+
         switch (v.getId()) {
             case R.id.sign_in_button:
                 signIn();
@@ -220,6 +268,9 @@ public class SignInActivity extends AppCompatActivity implements
                 break;
             case R.id.disconnect_button:
                 revokeAccess();
+                break;
+            case R.id.action_settings:
+                signOut();
                 break;
         }
     }

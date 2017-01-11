@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="8dp"
+    app:cardUseCompatPadding="true"
+    android:scrollbars="none"
+    >
+
+    <!--android:background="#C5CAE9"-->
+    <!--android:foreground="?attr/selectableItemBackground"-->
+    <!--android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:layout_marginBottom="15dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageLayout"
+            android:gravity="center_horizontal">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:contentDescription="abc"
+                android:src="@drawable/seminar"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerCrop"
+                android:backgroundTint="#c9ffffff"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/newsDetails"
+            android:layout_below="@id/imageLayout"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/newsTitle">
+
+                <!--<TextView-->
+                <!--android:id="@+id/titleLabel"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textSize="14dp"-->
+                <!--android:text="Title"-->
+                <!--android:textColor="@color/colorPrimary"-->
+                <!--android:textStyle="bold"-->
+                <!--android:elegantTextHeight="true"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:layout_alignParentTop="true" />-->
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+
+
+                    android:text="Title"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:elegantTextHeight="true"
+
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentTop="true" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/researchNewsAuthor"
+                android:layout_below="@id/newsTitle">
+
+                <TextView
+                    android:id="@+id/authorLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:text="Author"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:elegantTextHeight="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentTop="true" />
+
+                <TextView
+                    android:id="@+id/author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:layout_below="@id/authorLabel"
+                    android:text="Author"
+                    android:textColor="#000000"
+                    android:elegantTextHeight="true"
+                     />
+
+
+            </RelativeLayout>
+
+            <!--<RelativeLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/seminarDate"-->
+            <!--android:layout_below="@id/researchNewsAuthor">-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/titleLabel"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="14dp"-->
+            <!--android:text="Authors"-->
+            <!--android:textColor="@color/colorPrimary"-->
+            <!--android:textStyle="bold"-->
+            <!--android:elegantTextHeight="true"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:layout_alignParentTop="true" />-->
+
+
+            <!--<TextView-->
+            <!--android:id="@+id/NewsTitle"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="14dp"-->
+            <!--android:layout_toRightOf="@id/dateLabel"-->
+
+            <!--android:text="Title"-->
+            <!--android:textColor="#000000"-->
+            <!--android:elegantTextHeight="true"-->
+            <!--android:layout_marginLeft="50dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:layout_alignParentTop="true" />-->
+
+
+            <!--</RelativeLayout>-->
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/researchNewsAbstractView"
+                android:layout_below="@id/researchNewsAuthor">
+
+                <TextView
+                    android:id="@+id/abstractLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:text="News"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:elegantTextHeight="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentTop="true" />
+
+
+
+                <TextView
+                    android:id="@+id/newsAbstract"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:layout_below="@id/abstractLabel"
+                    android:text="Abstract"
+                    android:textColor="#000000"
+                    android:layout_marginTop="2dp"
+                    android:elegantTextHeight="true"
+                    />
+
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

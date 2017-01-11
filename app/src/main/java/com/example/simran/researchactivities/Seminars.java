@@ -1,13 +1,19 @@
 package com.example.simran.researchactivities;
 
 import android.app.ProgressDialog;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -35,12 +41,28 @@ public class Seminars extends AppCompatActivity
     private ArrayList<String> TitleList;
     private ArrayList<String> DateList;
     private int count;
+    private static int inCount = 0;
     ProgressDialog dialog;
     public static List<SeminarItemObjects> allItems = new ArrayList<SeminarItemObjects>();
     public static int[] pictureArray = {R.drawable.s1, R.drawable.speaker2, R.drawable.speaker3, R.drawable.speaker4};
     public static boolean fetched = false;
 
 
+    Toolbar toolbar;
+    List<SeminarItemObjects> rowListItem;
+
+    private Drawable getColoredArrow()
+    {
+        Drawable arrowDrawable = getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        Drawable wrapped = DrawableCompat.wrap(arrowDrawable);
+
+        if (arrowDrawable != null && wrapped != null) {
+            // This should avoid tinting all the arrows
+            arrowDrawable.mutate();
+            DrawableCompat.setTintList(wrapped, ColorStateList.valueOf(this.getResources().getColor(R.color.white)));
+        }
+        return wrapped;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -48,11 +70,37 @@ public class Seminars extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seminars);
 
+        toolbar = (Toolbar)findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
+
+        toolbar.setNavigationIcon(getColoredArrow());
+
+
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                onBackPressed();
+            }
+        });
+
         SpeakerList = new ArrayList<String>();
         TitleList = new ArrayList<String>();
         DateList = new ArrayList<String>();
 
-        List<SeminarItemObjects> rowListItem = initialList();
+        if(inCount == 0)
+        {
+            rowListItem = initialList();
+
+        }
+        else
+        {
+
+            rowListItem = getAllItemList();
+
+        }
+        //List<SeminarItemObjects> rowListItem = initialList();
 
         recyclerView= (RecyclerView) findViewById(R.id.my_recycler_view);
 
@@ -106,7 +154,10 @@ public class Seminars extends AppCompatActivity
         webView.addJavascriptInterface(new MyJavaScriptInterface(), "HTMLOUT");
         webView.setWebViewClient(new MyClient());
         webView.setWebChromeClient(new MyChromeClient());
-        webView.loadUrl("https://www.iiitd.ac.in/research/seminar");
+
+        webView.loadUrl("https://iiitd.ac.in/research/seminar");
+
+//        webView.loadUrl("https://www.iiitd.ac.in/research/seminar");
 
 
 
@@ -219,6 +270,12 @@ public class Seminars extends AppCompatActivity
                 }
                 Log.e("show-------------------",SpeakerList.toString()+",-----------"+TitleList.toString()+"------"+DateList.toString());
                 dialog.dismiss();
+                if(SpeakerList.size()>0)
+                {
+                    Toast.makeText(Seminars.this, "New Seminars Available: Swipe Down to Refresh Page.",
+                            Toast.LENGTH_LONG).show();
+                }
+
                 /*addHeaders();
                 addData();*/
             }
@@ -230,13 +287,23 @@ public class Seminars extends AppCompatActivity
     {
         int size = SpeakerList.size();
         allItems.clear();
+        int pic = R.drawable.seminar_icon;
 
         for (int i = 0 ; i < size ; i++)
         {
+            if(TitleList.get(i).toLowerCase().contains("data"))
+                pic = R.drawable.seminar_data;
+            else if(TitleList.get(i).toLowerCase().contains("biology")||TitleList.get(i).toLowerCase().contains("cell")|TitleList.get(i).toLowerCase().contains("medicine")|TitleList.get(i).toLowerCase().contains("health"))
+                pic = R.drawable.seminar_biology;
+            else if(TitleList.get(i).toLowerCase().contains("robotics"))
+                pic = R.drawable.seminar_robotics;
+            else
+                pic = R.drawable.seminar_icon;
+
             allItems.add(new SeminarItemObjects(TitleList.get(i),
                     addn(SpeakerList.get(i)),
                     DateList.get(i),
-                    pictureArray[i%4],
+                    pic,
                     "The project focuses on sequence-based string classification tasks that aim to accurately predict the DNA binding sites of proteins called transcription factors (TF) in unannotated cell contexts. Previous approaches are unable to perform such accurate predictions, since they do not consider distinctions among sequence segments from annotated (source) and unannotated (target) contexts. We therefore propose a novel method called \"Transfer String Kernel\" (TSK)  that achieves improved transcription factor binding site (TFBS) predictions using cross-context sample adaptation. TSK maps sequence patterns to a high-dimensional feature space using the discriminative mismatch string kernel framework under SVM. Labeled examples from a source (annotated) context are transferred to a target (unannotated) context by re-weighting source samples adaptively. We have experimentally verified TSK's ability of TFBS identifications for different TFs under a cross-organism setting. We find that TSK consistently outperforms the state-of-the-art TFBS prediction tools, especially when working with TFs whose sequences do not conserve across contexts. We also demonstrate the generalizability of our model by showing its cutting-edge performance on a different set of cross-context  tasks for peptide binding prediction.",
                     dateParser(DateList.get(i))));
         }
@@ -284,10 +351,19 @@ public class Seminars extends AppCompatActivity
             case "August":
                 mm = 7;
                 break;
+            case "Aug":
+                mm = 7;
+                break;
             case "September":
                 mm = 8;
                 break;
+            case "Sep":
+                mm = 8;
+                break;
             case "October":
+                mm = 9;
+                break;
+            case "Oct":
                 mm = 9;
                 break;
             case "November":
@@ -321,43 +397,30 @@ public class Seminars extends AppCompatActivity
     public List<SeminarItemObjects> initialList()
     {
 
-        allItems.add(new SeminarItemObjects("**Stochastic model of protein bursts in the lactose operon of Escherichia coli",
-                "Dr. Atul Narang, \nIIT Delhi",
-                "April 4, 2016",
-                R.drawable.speaker3,
-                "The project focuses on sequence-based string classification tasks that aim to accurately predict the DNA binding sites of proteins called transcription factors (TF) in unannotated cell contexts. Previous approaches are unable to perform such accurate predictions, since they do not consider distinctions among sequence segments from annotated (source) and unannotated (target) contexts. We therefore propose a novel method called \"Transfer String Kernel\" (TSK)  that achieves improved transcription factor binding site (TFBS) predictions using cross-context sample adaptation. TSK maps sequence patterns to a high-dimensional feature space using the discriminative mismatch string kernel framework under SVM. Labeled examples from a source (annotated) context are transferred to a target (unannotated) context by re-weighting source samples adaptively. We have experimentally verified TSK's ability of TFBS identifications for different TFs under a cross-organism setting. We find that TSK consistently outperforms the state-of-the-art TFBS prediction tools, especially when working with TFs whose sequences do not conserve across contexts. We also demonstrate the generalizability of our model by showing its cutting-edge performance on a different set of cross-context  tasks for peptide binding prediction.",
-                "2016,3,4"));
+        allItems.add(new SeminarItemObjects("Implications of the end of AppleTalk routing [Demo Seminar]",
+                "Dr. Bharti Joshi, \nApple Inc.",
+                "July 22, 2016",
+                R.drawable.seminar_icon,
+                "AppleTalk was a proprietary suite of networking protocols developed by Apple Inc. for their Macintosh computers. AppleTalk includes a number of features that allow local area networks to be connected with no prior setup or the need for a centralized router or server of any sort.",
+                dateParser("July 22, 2016")));
+        inCount++;
 
-
-        allItems.add(new SeminarItemObjects("LOMo: Latent Ordinal Model for Facial Analysis in Videos",
-                "Dr. Gaurav Sharma, \nMPI, Germany",
-                "June 26, 2016",
-                R.drawable.speaker2,
-                "The project focuses on sequence-based string classification tasks that aim to accurately predict the DNA binding sites of proteins called transcription factors (TF) in unannotated cell contexts. Previous approaches are unable to perform such accurate predictions, since they do not consider distinctions among sequence segments from annotated (source) and unannotated (target) contexts. We therefore propose a novel method called \"Transfer String Kernel\" (TSK)  that achieves improved transcription factor binding site (TFBS) predictions using cross-context sample adaptation. TSK maps sequence patterns to a high-dimensional feature space using the discriminative mismatch string kernel framework under SVM. Labeled examples from a source (annotated) context are transferred to a target (unannotated) context by re-weighting source samples adaptively. We have experimentally verified TSK's ability of TFBS identifications for different TFs under a cross-organism setting. We find that TSK consistently outperforms the state-of-the-art TFBS prediction tools, especially when working with TFs whose sequences do not conserve across contexts. We also demonstrate the generalizability of our model by showing its cutting-edge performance on a different set of cross-context  tasks for peptide binding prediction.",
-                "2016,5,26"));
-
-
-        allItems.add(new SeminarItemObjects("LOMo: Latent Ordinal Model for Facial Analysis in Videos",
-                "Dr. Gaurav Sharma, \nMPI, Germany",
-                "March 31, 2016",
-                R.drawable.speaker4,
-                "The project focuses on sequence-based string classification tasks that aim to accurately predict the DNA binding sites of proteins called transcription factors (TF) in unannotated cell contexts. Previous approaches are unable to perform such accurate predictions, since they do not consider distinctions among sequence segments from annotated (source) and unannotated (target) contexts. We therefore propose a novel method called \"Transfer String Kernel\" (TSK)  that achieves improved transcription factor binding site (TFBS) predictions using cross-context sample adaptation. TSK maps sequence patterns to a high-dimensional feature space using the discriminative mismatch string kernel framework under SVM. Labeled examples from a source (annotated) context are transferred to a target (unannotated) context by re-weighting source samples adaptively. We have experimentally verified TSK's ability of TFBS identifications for different TFs under a cross-organism setting. We find that TSK consistently outperforms the state-of-the-art TFBS prediction tools, especially when working with TFs whose sequences do not conserve across contexts. We also demonstrate the generalizability of our model by showing its cutting-edge performance on a different set of cross-context  tasks for peptide binding prediction.",
-                "2016,2,31"));
 
         allItems.add(new SeminarItemObjects("Stochastic model of protein bursts in the lactose operon of Escherichia coli",
                 "Dr. Atul Narang, \nIIT Delhi",
                 "April 4, 2016",
-                R.drawable.s1,
+                R.drawable.seminar_icon,
                 "The project focuses on sequence-based string classification tasks that aim to accurately predict the DNA binding sites of proteins called transcription factors (TF) in unannotated cell contexts. Previous approaches are unable to perform such accurate predictions, since they do not consider distinctions among sequence segments from annotated (source) and unannotated (target) contexts. We therefore propose a novel method called \"Transfer String Kernel\" (TSK)  that achieves improved transcription factor binding site (TFBS) predictions using cross-context sample adaptation. TSK maps sequence patterns to a high-dimensional feature space using the discriminative mismatch string kernel framework under SVM. Labeled examples from a source (annotated) context are transferred to a target (unannotated) context by re-weighting source samples adaptively. We have experimentally verified TSK's ability of TFBS identifications for different TFs under a cross-organism setting. We find that TSK consistently outperforms the state-of-the-art TFBS prediction tools, especially when working with TFs whose sequences do not conserve across contexts. We also demonstrate the generalizability of our model by showing its cutting-edge performance on a different set of cross-context  tasks for peptide binding prediction.",
-                "2016,3,4"));
-
+                dateParser("April 4, 2016")));
+        inCount++;
 
         allItems.add(new SeminarItemObjects("LOMo: Latent Ordinal Model for Facial Analysis in Videos",
-                "Dr. Gaurav Sharma, \nIIIT Hyderabad ",
-                "March 31, 2016",
-                R.drawable.speaker2,
+                "Dr. Gaurav Sharma, \nMPI, Germany",
+                "June 26, 2016",
+                R.drawable.seminar_icon,
                 "The project focuses on sequence-based string classification tasks that aim to accurately predict the DNA binding sites of proteins called transcription factors (TF) in unannotated cell contexts. Previous approaches are unable to perform such accurate predictions, since they do not consider distinctions among sequence segments from annotated (source) and unannotated (target) contexts. We therefore propose a novel method called \"Transfer String Kernel\" (TSK)  that achieves improved transcription factor binding site (TFBS) predictions using cross-context sample adaptation. TSK maps sequence patterns to a high-dimensional feature space using the discriminative mismatch string kernel framework under SVM. Labeled examples from a source (annotated) context are transferred to a target (unannotated) context by re-weighting source samples adaptively. We have experimentally verified TSK's ability of TFBS identifications for different TFs under a cross-organism setting. We find that TSK consistently outperforms the state-of-the-art TFBS prediction tools, especially when working with TFs whose sequences do not conserve across contexts. We also demonstrate the generalizability of our model by showing its cutting-edge performance on a different set of cross-context  tasks for peptide binding prediction.",
-                "2016,2,31"));
+                dateParser("June 26, 2016")));
+        inCount++;
 
         return allItems;
     }
@@ -376,6 +439,13 @@ public class Seminars extends AppCompatActivity
 
         return allItems;
     }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
 
 
 }

@@ -27,9 +27,10 @@ public class ViewResearchNewsRecyclerAdapter extends RecyclerView.Adapter<ViewRe
     @Override
     public ViewResearchNewsRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        View v=inflater.inflate(R.layout.activity_view_research_news_details, parent, false);
+        View v=inflater.inflate(R.layout.view_research_news_details, parent, false);
 
         ViewResearchNewsRecyclerViewHolder viewHolder=new ViewResearchNewsRecyclerViewHolder(v);
+
         return viewHolder;
     }
 
@@ -41,23 +42,23 @@ public class ViewResearchNewsRecyclerAdapter extends RecyclerView.Adapter<ViewRe
         holder.tv2.setText(itemList.get(position).getAuthors());
         holder.tv3.setText(itemList.get(position).getNewsAbstract());
         holder.imageView.setImageResource(itemList.get(position).getPhoto());
-        holder.imageView.setOnClickListener(clickListener);
+//        holder.imageView.setOnClickListener(clickListener);
         holder.imageView.setTag(holder);
     }
 
-    View.OnClickListener clickListener=new View.OnClickListener()
-    {
-        @Override
-        public void onClick(View v)
-        {
-
-            ViewResearchNewsRecyclerViewHolder vholder = (ViewResearchNewsRecyclerViewHolder) v.getTag();
-            int position = vholder.getPosition();
-
-//            Toast.makeText(context,"This is position "+position,Toast.LENGTH_LONG ).show();
-
-        }
-    };
+//    View.OnClickListener clickListener=new View.OnClickListener()
+//    {
+//        @Override
+//        public void onClick(View v)
+//        {
+//
+//            ViewResearchNewsRecyclerViewHolder vholder = (ViewResearchNewsRecyclerViewHolder) v.getTag();
+//            int position = vholder.getPosition();
+//
+////            Toast.makeText(context,"This is position "+position,Toast.LENGTH_LONG ).show();
+//
+//        }
+//    };
 
 
 

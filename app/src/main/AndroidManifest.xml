@@ -7,36 +7,81 @@
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/irdicon1"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
-        <activity android:name=".Seminars" />
-        <activity android:name=".ViewSeminarDetails" />
+        <activity
+            android:name=".Seminars"
+            android:label="Seminars" />
+        <activity
+            android:name=".ViewSeminarDetails"
+            android:label="Seminar Details" />
         <activity android:name=".JsoapParse" />
-        <activity android:name=".ResearchNews" />
-        <activity android:name=".ViewResearchNewsDetails" />
+        <activity
+            android:name=".ResearchNews"
+            android:label="Research News" />
+        <activity
+            android:name=".ViewResearchNewsDetails"
+            android:label="Research News Details" />
         <activity
             android:name=".SignInActivity"
-            android:label="@string/title_activity_sign_in">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:label="@string/app_name">
         </activity>
         <activity
             android:name=".ResearchOpeningsActivity"
-            android:label="@string/title_activity_research_openings"
+            android:label="Research Openings"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".PostOpenings"
             android:label="@string/title_activity_post_openings"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ViewResearchOpeningsDetails"
+            android:label="Details"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ViewResearchOpeningsDetailsFromNewsfeed"
+            android:label="Details" />
+        <activity android:name=".LoginPage"
+            android:label="Login">
+
+            <intent-filter>
+                    <action android:name="android.intent.action.MAIN" />
+
+                    <category android:name="android.intent.category.LAUNCHER" />
+                </intent-filter>
+        </activity>
+        <activity
+            android:name=".SearchDirectoryActivity"
+            android:label="Search" >
+        </activity>
+
+        <activity
+            android:name=".PosterEventsActivity"
+            android:label="PosterEvents" >
+        </activity>
+
+        <service android:name=".MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service android:name=".FirebaseIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

@@ -5,9 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
+    app:titleTextColor="@android:color/white"
     android:minHeight="?attr/actionBarSize"
+    android:height="5dp"
     android:fitsSystemWindows="true"
     android:id="@+id/toolBar"
+    app:layout_scrollFlags="scroll|enterAlways"
     app:theme="@style/Base.Theme.AppCompat.Light.DarkActionBar">
+
 
 </android.support.v7.widget.Toolbar>

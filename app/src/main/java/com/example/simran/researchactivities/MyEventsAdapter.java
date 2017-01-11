@@ -18,7 +18,8 @@ import java.util.List;
 /**
  * Created by admin on 22-Jun-16.
  */
-public class MyEventsAdapter extends  RecyclerView.Adapter<MyEventsRecyclerViewHolder> {
+public class MyEventsAdapter extends  RecyclerView.Adapter<MyEventsRecyclerViewHolder>
+{
 
     private List<SeminarItemObjects> itemList;
 
@@ -26,7 +27,8 @@ public class MyEventsAdapter extends  RecyclerView.Adapter<MyEventsRecyclerViewH
     LayoutInflater inflater;
 
 
-    public MyEventsAdapter(Context context, List<SeminarItemObjects> itemList) {
+    public MyEventsAdapter(Context context, List<SeminarItemObjects> itemList)
+    {
         this.context = context;
         this.itemList = itemList;
         inflater = LayoutInflater.from(context); //****

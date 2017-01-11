@@ -84,8 +84,12 @@ public class SeminarRecyclerAdapter extends RecyclerView.Adapter<SeminarRecycleV
                              case DialogInterface.BUTTON_POSITIVE:
                                 //Yes button clicked
                                 MyEventsFragment a = new MyEventsFragment();
-                                a.addEvent(position);
-                                addToCalendar(v, position);
+                                 try {
+                                     a.addEvent(position);
+                                 } catch (Throwable throwable) {
+                                     throwable.printStackTrace();
+                                 }
+                                 addToCalendar(v, position);
                                 break;
 
                             case DialogInterface.BUTTON_NEGATIVE:
@@ -160,9 +164,12 @@ public class SeminarRecyclerAdapter extends RecyclerView.Adapter<SeminarRecycleV
                 cal.getTimeInMillis());
         calIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME,
                 cal.getTimeInMillis()+ 60 * 60 * 1000);
-        calIntent.putExtra(CalendarContract.Events.ACCESS_LEVEL, CalendarContract.Events.ACCESS_PRIVATE); // Remove if adding friends
+        calIntent.putExtra(CalendarContract.Events.ACCESS_LEVEL, CalendarContract.Events.ACCESS_PUBLIC); // Remove if adding friends
+        calIntent.putExtra(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
+
 
         view.getContext().startActivity(calIntent);
+
 
     }
 

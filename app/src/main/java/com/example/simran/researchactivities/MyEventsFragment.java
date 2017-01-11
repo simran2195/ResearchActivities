@@ -1,19 +1,36 @@
 package com.example.simran.researchactivities;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Path;
 import android.os.Bundle;
+import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.JsonReader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.GZIPInputStream;
+import java.util.*;
+import java.util.zip.GZIPOutputStream;
 
 
 /**
@@ -28,6 +45,13 @@ public class MyEventsFragment extends Fragment
     static View rootView;
     public static List<SeminarItemObjects> rowListItem;
     public static List<SeminarItemObjects> myEventItems = new ArrayList<SeminarItemObjects>();
+
+//    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+//    SharedPreferences.Editor se = sp.edit();
+
+    static File path = Environment.getExternalStoragePublicDirectory(
+            Environment.DIRECTORY_MOVIES);
+    static File f = new File(path, "/" + "myList.obj");
 
 
     public MyEventsFragment()
@@ -55,9 +79,13 @@ public class MyEventsFragment extends Fragment
         }
         else
         {
+
             rowListItem = getMyEventItemList();
 
         }
+
+//
+
         final MyEventsAdapter adapter = new MyEventsAdapter(getActivity(), rowListItem);
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
@@ -78,6 +106,8 @@ public class MyEventsFragment extends Fragment
 //                adapter.addAll(getMyEventItemList());
 //                addData();
                 adapter.addAll(getMyEventItemList());
+
+
                 swipeContainer.setRefreshing(false);
 
             }
@@ -87,6 +117,8 @@ public class MyEventsFragment extends Fragment
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+
+
     }
 
     public void refresh()
@@ -96,7 +128,7 @@ public class MyEventsFragment extends Fragment
         swipeContainer.setRefreshing(false);
     }
 
-    public void addEvent(int position)
+    public void addEvent(int position) throws Throwable
     {
         if(count == 0)
         {
@@ -110,13 +142,16 @@ public class MyEventsFragment extends Fragment
 
         Seminars s = new Seminars();
         List<SeminarItemObjects> allItems = s.getAllItemList();
-        myEventItems.add(allItems.get(position));
+        myEventItems.add(0, allItems.get(position));
         ++count;
 //        System.out.println("*******"+count);
 //        System.out.println(allItems.get(position).getTitle()+"$$$$ From My events fragment"+" -> "+ allItems.get(position).getSpeaker()+" -> "+allItems.get(position).getDate());
 //        swipeContainer.setRefreshing(true);
 //        refresh();
 //        swipeContainer.setRefreshing(false);
+
+        writeList();
+
 
     }
 
@@ -162,9 +197,81 @@ public class MyEventsFragment extends Fragment
     private List<SeminarItemObjects> getMyEventItemList()
     {
 
+ //       writeList();
+   //     sharedPref();
         return myEventItems;
+    }
+
+    public void writeList()
+    {
+        try {
+            writeObject("C:\\myList.obj", myEventItems);
+            System.out.println("**************************&&&&&&&&&&&&&&&&&&&&&&&&&Written to file");
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
+
+    }
+
+    public void sharedPref()
+    {
+        try
+        {
+            myEventItems = (ArrayList<SeminarItemObjects>) readObject("C:\\myList.obj");
+            System.out.println("************************** File has been read");
+
+        }
+        catch (Throwable throwable)
+        {
+            throwable.printStackTrace();
+        }
+
+    }
+
+    public static void writeObject(String fileName, Object object) throws Throwable
+    {
+
+        FileOutputStream file = new FileOutputStream(f);
+        write(file, object);
+        file.close();
+    }
+
+
+    public static Object readObject(String fileName) throws Throwable
+    {
+        if (!(new File(fileName)).exists()) return null;
+        else
+        {
+            FileInputStream file = new FileInputStream(f);
+            Object object = read(file);
+            file.close();
+            return object;
+        }
+    }
+
+    private static void write(OutputStream os, Object object) throws IOException
+    {
+        GZIPOutputStream gos = new GZIPOutputStream(os);
+        ObjectOutputStream oos = new ObjectOutputStream(gos);
+        oos.writeObject(object);
+        oos.close();
+        gos.close();
+    }
+
+    private static Object read(InputStream is) throws Throwable
+    {
+        GZIPInputStream gis = new GZIPInputStream(is);
+        ObjectInputStream ois = new ObjectInputStream(gis);
+        Object object = ois.readObject();
+        ois.close();
+        gis.close();
+        return object;
     }
 
 
 
 }
+
+
+
+

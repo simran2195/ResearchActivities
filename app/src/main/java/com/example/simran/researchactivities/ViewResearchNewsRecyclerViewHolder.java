@@ -21,7 +21,7 @@ public class ViewResearchNewsRecyclerViewHolder extends RecyclerView.ViewHolder 
         tv1 = (TextView) itemView.findViewById(R.id.title);
         tv2 = (TextView) itemView.findViewById(R.id.author);
         tv3 = (TextView) itemView.findViewById(R.id.newsAbstract);
-        //imageView = (ImageView) itemView.findViewById(R.id.image);
+        imageView = (ImageView) itemView.findViewById(R.id.image);
 
     }
 

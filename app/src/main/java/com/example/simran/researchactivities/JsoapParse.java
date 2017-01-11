@@ -5,18 +5,10 @@ package com.example.simran.researchactivities;
  */
 
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Node;
-import org.jsoup.select.Elements;
-
-
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -26,29 +18,33 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.widget.TableRow.LayoutParams;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
+import org.jsoup.select.Elements;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class JsoapParse extends AppCompatActivity {
     WebView webView;
     int art = 0;
-private ArrayList<String> SpeakerList;
+    private ArrayList<String> SpeakerList;
     private ArrayList<String> TitleList;
     private ArrayList<String> DateList;
 
-    TableLayout tl;
-    TableRow tr;
-   // TextView companyTV,valueTV;
-
-    TextView speakers,Titles;
-
     ProgressDialog dialog;
-    protected void onCreate(Bundle savedInstanceState) {
+
+
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_jsoup);
 
        /* CallJSoupService obj = new CallJSoupService();
         obj.execute(new String[]{"PARAMS"});*/
@@ -144,15 +140,18 @@ private ArrayList<String> SpeakerList;
 
     // onCreateOption
 
-    public class MyJavaScriptInterface {
+    public class MyJavaScriptInterface
+    {
         @JavascriptInterface
         @SuppressWarnings("unused")
         // MediaLogin ml=new MediaLogin();
-        public void processHTML(String result) {
+        public void processHTML(String result)
+        {
             // process the html as needed by the app
             if (result == null)
                 return;
-            if (result != null) {
+            if (result != null)
+            {
                 System.out.println("result was : " + result);
                 Document doc = Jsoup.parse(result);
                 System.out.println("The document is+++++++" + doc);
@@ -192,127 +191,7 @@ private ArrayList<String> SpeakerList;
         }
     }
 
-    /** This function add the headers to the table **/
-    public void addHeaders(){
 
-        /** Create a TableRow dynamically **/
-        tr = new TableRow(this);
-        tr.setLayoutParams(new LayoutParams(
-                LayoutParams.FILL_PARENT,
-                LayoutParams.WRAP_CONTENT));
 
-        /** Creating a TextView to add to the row **/
-        TextView speakers = new TextView(this);
-        speakers.setText("Speaker");
-        speakers.setTextColor(Color.GRAY);
-        speakers.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        speakers.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT));
-        speakers.setPadding(5, 5, 5, 0);
-        tr.addView(speakers);  // Adding textView to tablerow.
 
-        /** Creating another textview **/
-        TextView Titles = new TextView(this);
-        Titles.setText("Title");
-        Titles.setTextColor(Color.GRAY);
-        Titles.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT));
-        Titles.setPadding(5, 5, 5, 0);
-        Titles.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        tr.addView(Titles); // Adding textView to tablerow.
-
-        // Add the TableRow to the TableLayout
-        tl.addView(tr, new TableLayout.LayoutParams(
-                LayoutParams.FILL_PARENT,
-                LayoutParams.WRAP_CONTENT));
-
-        // we are adding two textviews for the divider because we have two columns
-        tr = new TableRow(this);
-        tr.setLayoutParams(new LayoutParams(
-                LayoutParams.FILL_PARENT,
-                LayoutParams.WRAP_CONTENT));
-
-        /** Creating another textview **/
-        TextView divider = new TextView(this);
-        divider.setText("-----------------");
-        divider.setTextColor(Color.GREEN);
-        divider.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT));
-        divider.setPadding(5, 0, 0, 0);
-        divider.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        tr.addView(divider); // Adding textView to tablerow.
-
-        TextView divider2 = new TextView(this);
-        divider2.setText("-------------------------");
-        divider2.setTextColor(Color.GREEN);
-        divider2.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT));
-        divider2.setPadding(5, 0, 0, 0);
-        divider2.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        tr.addView(divider2); // Adding textView to tablerow.
-
-        // Add the TableRow to the TableLayout
-        tl.addView(tr, new TableLayout.LayoutParams(
-                LayoutParams.FILL_PARENT,
-                LayoutParams.WRAP_CONTENT));
-    }
-
-    /** This function add the data to the table **/
-    public void addData(){
-
-        for (int i = 0; i <SpeakerList.size() ; i++)
-        {
-            /** Create a TableRow dynamically **/
-            tr = new TableRow(this);
-            tr.setLayoutParams(new LayoutParams(
-                    LayoutParams.FILL_PARENT,
-                    LayoutParams.WRAP_CONTENT));
-
-            /** Creating a TextView to add to the row **/
-            speakers = new TextView(this);
-            //companyTV.setText("jai shree ram");
-            speakers.setText(SpeakerList.get(i));
-            speakers.setTextColor(Color.RED);
-            speakers.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-            speakers.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-            speakers.setPadding(5, 5, 5, 5);
-            tr.addView(speakers);  // Adding textView to tablerow.
-
-            /** Creating another textview **/
-            Titles = new TextView(this);
-            Titles.setText(TitleList.get(i));
-           // valueTV.setText("jai shree ram ji ");
-            // valueTV.setTextColor(Color.GREEN);
-            Titles.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT));
-            Titles.setPadding(5, 5, 5, 5);
-            Titles.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-            tr.addView(Titles); // Adding textView to tablerow.
-
-            // Add the TableRow to the TableLayout
-            tl.addView(tr, new TableLayout.LayoutParams(
-                    LayoutParams.FILL_PARENT,
-                    LayoutParams.WRAP_CONTENT));
-        }
-    }
-
-//     class CallJSoupService extends AsyncTask<String , Void  , String>{
-//
-//       @Override
-//       protected void onPostExecute(String s) {
-//           super.onPostExecute(s);
-//           addHeaders();
-//           addData();
-//
-//       }
-//
-//       @Override
-//        protected String doInBackground(String... params) {
-//
-//           webView = (WebView) findViewById(R.id.webView1);
-//           webView.getSettings().setJavaScriptEnabled(true);
-//           webView.getSettings().setDomStorageEnabled(true);
-//           webView.addJavascriptInterface(new MyJavaScriptInterface(), "HTMLOUT");
-//           webView.setWebViewClient(new MyClient());
-//           webView.setWebChromeClient(new MyChromeClient());
-//            webView.loadUrl("https://www.iiitd.ac.in/research/seminar");
-//
-//            return "";
-//        }
-//    }
 }

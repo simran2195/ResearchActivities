@@ -26,10 +26,10 @@ public class ResearchNewsViewHolder extends RecyclerView.ViewHolder implements V
 
     public void onClick(View view)
     {
-//        int pos = getPosition();
-//        Intent i = new Intent(view.getContext(), ViewResearchNewsDetails.class);
-//        i.putExtra("value", pos);
-//        view.getContext().startActivity(i);
+        int pos = getPosition();
+        Intent i = new Intent(view.getContext(), ViewResearchNewsDetails.class);
+        i.putExtra("value", pos);
+        view.getContext().startActivity(i);
 
     }
 }
